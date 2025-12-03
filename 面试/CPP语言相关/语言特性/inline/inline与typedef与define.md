@@ -10,12 +10,7 @@
 * 作用域：#define 没有作用域的限制，只要是之前预定义过的宏，在以后的程序中都可以使用，而 typedef 有自己的作用域。
 * enum给int型常量起名字，typedef给数据类型起名字，宏定义也可以看做一种重命名
 
-
-
 #### 指针的操作：typedef 和 #define 在处理指针时不完全一样
-
-
-
 
 ```c++
 #include <iostream>
@@ -32,12 +27,10 @@ int main()
     int var = 1;
     const INTPTR1 p5 = &var; // 相当于 const int * p5; 常量指针，即不可以通过 p5 去修改 p5 指向的内容，但是 p5 可以指向其他内容。
     const INTPTR2 p6 = &var; // 相当于 int * const p6; 指针常量，不可使 p6 再指向其他内容。
-    
+
     return 0;
 }
 ```
-
-
 
 ==**C++ 中推荐使用 inline 代替 #define 声明函数**==
 

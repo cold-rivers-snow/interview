@@ -1,3 +1,5 @@
+# const 作用
+
 面试高频指数：★★★☆☆
 
 #### 作用：
@@ -26,18 +28,18 @@ using namespace std;
 class A
 {
 public:
-	int var;
-	A(int tmp) : var(tmp) {}
-	void c_fun(int tmp) const // const 成员函数
-	{
-		var = tmp; // error: assignment of member 'A::var' in read-only object. 在 const 成员函数中，不能修改任何类成员变量。		
-		fun(tmp); // error: passing 'const A' as 'this' argument discards qualifiers. const 成员函数不能调用非 const 成员函数，因为非 const 成员函数可能会修改成员变量。
-	}
+    int var;
+    A(int tmp) : var(tmp) {}
+    void c_fun(int tmp) const // const 成员函数
+    {
+        var = tmp; // error: assignment of member 'A::var' in read-only object. 在 const 成员函数中，不能修改任何类成员变量。        
+        fun(tmp); // error: passing 'const A' as 'this' argument discards qualifiers. const 成员函数不能调用非 const 成员函数，因为非 const 成员函数可能会修改成员变量。
+    }
 
-	void fun(int tmp)
-	{
-		var = tmp;
-	}
+    void fun(int tmp)
+    {
+        var = tmp;
+    }
 };
 
 int main()
@@ -45,8 +47,6 @@ int main()
     return 0;
 }
 ```
-
-
 
 ### 请你来说一下C++里是怎么定义常量的？常量存放在内存的哪个位置？
 
@@ -67,18 +67,15 @@ const TYPE ValueName = value;
 ```
 
 2. 修饰指针
-
-  * 指向常量的指针（pointer to const）
-  * 自身是常量的指针（常量指针，const pointer）
+   
+   * 指向常量的指针（pointer to const）
+   * 自身是常量的指针（常量指针，const pointer）
 
 3. 修饰引用
-
 * 指向常量的引用（reference to const）如果用于形参类型，即避免了拷贝，又避免了函数对值的修改；
+
 * 没有 const reference，因为引用只是对象的别名，引用不是对象，不能用 const 修饰
-
 4. 修饰成员函数，说明该成员函数内不能修改成员变量。const修饰的成员函数表明函数调用不会对对象做出任何更改，事实上，如果确认不会对对象做更改，就应该为函数加上const限定，这样无论const对象还是普通对象都可以调用该函数。
-
-
 
 ### const 使用
 
@@ -104,11 +101,7 @@ int * const *p ; //p为指针，指向常量，该常量为指针，指向int，
 int ** const *p; //p为指针，指向常量，常量为指向指针的指针，p为指针，指向常量型指针的指针，*p为指向指针的指针，不可修改
 
 int * const **p; //p为指针，指向一个指针1，指针1指向一个常量，常量为指向int的指针，即p为指针，指向一个指向常量指针的指针， **p为指向一个int的指针，不可修改
-
-
 ```
-
-
 
 ```c++
 // 类
@@ -144,20 +137,18 @@ void function()
 //这里123本来是在栈上的，但是编译器可能会做某些优化，将其放到常量区
 //确实，经过简单测试const char crr[]="123"; crr[1]='5';结果报错
 //error: assignment of read-only location ‘crr[1]’
-    
+
     char* p1 = greeting;                // 指针变量，指向字符数组变量
     const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明不能通过p2修改greeting，但是greeting在栈上可以通过其它方式修改，比如下标，和p1来修改）
     char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变，即指针不能指向其它地址，但可以修改其中的值）
     //比如*(p2+1)='c'; 则报错assignment of read-only location ‘*(p2 + 1u)’
     const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量
 }
-
 ```
 
 ### 函数中使用const
 
 (1)const修饰函数参数
-
 
 ```c++
 a.传递过来的参数在函数内不可以改变(无意义，因为Var本身就是形参)
@@ -179,13 +170,11 @@ void function(const Class& Var); //引用参数在函数内不可以改变
 void function(const TYPE& Var); //引用参数在函数内为常量不可变
 ```
 
-
 这样的一个const引用传递和最普通的函数按值传递的效果是一模一样的,他禁止对引用的对象的一切修改,唯一不同的是按值传递会先建立一个类对象的副本, 然后传递过去,而它直接传递地址,所以这种传递比按值传递更有效.另外只有引用的const传递可以传递一个临时对象,因为临时对象都是const属性, 且是不可见的,他短时间存在一个局部域中,所以不能使用指针,只有引用的const传递能够捕捉到这个家伙.
 
 (2)const 修饰函数返回值
 
 const修饰函数返回值其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。
-
 
 ```c++
 const int fun1() //返回一个常数，这个其实无意义，因为参数返回本身就是赋值。
@@ -199,6 +188,3 @@ int* const fun3() //返回一个指向变量的常指针
 
 int * const pValue = fun2(); //我们可以把fun2()看作成一个变量，即指针本身不可变。
 ```
-
-
-
